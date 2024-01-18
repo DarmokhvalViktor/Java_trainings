@@ -1,160 +1,103 @@
-import first_subtask.User;
-import fourth_subtask.Person;
-import fourth_subtask.Pet;
-import fourth_subtask.ZooClub;
-import third_subtask.Car;
-import third_subtask.Gender;
-import third_subtask.Skill;
-import third_subtask.UserWithDetails;
+import third_task.Car;
+import third_task.CarOwner;
 
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
 //        1
-        List<User> userList = getUserList();
-        List<User> sortedByAgeAscendingOrder = userList.stream()
-                .sorted(Comparator.comparingInt(User::getAge))
-                .toList();
-        System.out.println(sortedByAgeAscendingOrder);
+        String[] alphabet = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+                "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
+        List<String> stringList = new ArrayList<>();
+        for (int i = 1; i <= 20; i++) {
+            stringList.add(getRandomLetter(alphabet).repeat(i));
+        }
+        System.out.println(stringList);
 
-        List<User> sortedByAgeDescendingOrder = userList.stream()
-                .sorted((x, y) -> y.getAge() - x.getAge())
-                .toList();
-        System.out.println(sortedByAgeDescendingOrder);
-
-        List<User> sortedByNameLengthAscendingOrder = userList.stream()
-                .sorted(Comparator.comparingInt(x -> x.getName().length()))
-                .toList();
-        System.out.println(sortedByNameLengthAscendingOrder);
-
-        List<User> sortedByNameLengthDescendingOrder = userList.stream()
-                .sorted((x, y) -> y.getName().length() - x.getName().length())
-                .toList();
-        System.out.println(sortedByNameLengthDescendingOrder);
-        System.out.println("___________________________");
+        System.out.println("__________delimiter___________");
+        stringList.sort(String::compareTo);
+        System.out.println(stringList);
+        List<String> filteredList = stringList.stream().filter(a -> a.length() < 4).toList();
+        System.out.println("__________delimiter___________");
+        System.out.println(filteredList);
+        System.out.println("__________delimiter___________");
 
 //        2
-        List<String> stringList = Arrays.asList(
-                "Apple", "Banana", "Cherry", "Date", "Grape",
-                "Orange", "Kiwi", "Lemon", "Mango", "Peach",
-                "Pear", "Plum", "Strawberry", "Watermelon", "Blueberry",
-                "Raspberry", "Pineapple", "Coconut", "Blackberry", "Apricot"
-        );
-        Collections.sort(stringList);
-        System.out.println(stringList);
-        List<String> stringList2 = Arrays.asList(
-                "Apple", "Banana", "Cherry", "Date", "Grape",
-                "Orange", "Kiwi", "Lemon", "Mango", "Peach",
-                "Pear", "Plum", "Strawberry", "Watermelon", "Blueberry",
-                "Raspberry", "Pineapple", "Coconut", "Blackberry", "Apricot"
-        );
-        List<String> sortedList = stringList2.stream()
-                .sorted(String::compareTo)
-                .toList();
-        System.out.println(sortedList);
-        System.out.println("___________________________");
+        List<Integer> integerList = new ArrayList<>();
+        for (int i = 1; i <= 20 ; i++) {
+            integerList.add(getRandomInteger() * i);
+        }
+        System.out.println(integerList);
+        System.out.println("__________delimiter___________");
+        integerList.stream().sorted().forEach(System.out::println);
+        System.out.println("__________delimiter___________");
+        integerList.stream().filter(n -> n % 3 == 0).forEach(System.out::println);
+        System.out.println("__________delimiter___________");
+        integerList.stream().filter(n -> n % 10 == 0).forEach(System.out::println);
+        System.out.println("__________delimiter___________");
+        integerList.forEach(System.out::println);
+        System.out.println("__________delimiter___________");
+        integerList.stream().map(n -> n * 3).forEach(System.out::println);
+        System.out.println("__________delimiter___________");
 
 //        3
-        List<UserWithDetails> userWithDetailsList = getUserWithDetailsList();
-        Set<UserWithDetails> hashSetUsers = new HashSet<>(userWithDetailsList);
-        System.out.println("userWithDetailsList" + userWithDetailsList);
-        System.out.println("hashSetUsers" + hashSetUsers);
-        System.out.println("___________________________");
-        hashSetUsers.stream()
-                .filter(user -> user.getGender().equals(Gender.FEMALE))
-                .forEach(System.out::println);
-        System.out.println("___________________________");
-
-
-
-        List<UserWithDetails> userWithDetailsList2 = getUserWithDetailsList();
-        System.out.println("___________________________");
-        Set<UserWithDetails> treeSetUsers = new TreeSet<>(userWithDetailsList2);
-        System.out.println("treeSetUsers" + treeSetUsers);
-        treeSetUsers
-                .forEach(System.out::println);
-
-//        4
-        ZooClub zooClub = new ZooClub();
-
-        Person person1 = new Person("John");
-        Person person2 = new Person("Alice");
-        Person person3 = new Person("Jake");
-
-        zooClub.addMember(person1);
-        zooClub.addMember(person2);
-        zooClub.addMember(person3);
-
-        Pet pet1 = new Pet("Dog");
-        Pet pet2 = new Pet("Cat");
-
-        zooClub.addPetToPerson(person1, pet1);
-        zooClub.addPetToPerson(person2, pet2);
-        zooClub.addPetToPerson(person3, pet2);
-        zooClub.addPetToPerson(person3, pet1);
-
-        zooClub.displayClub();
-
-        zooClub.removePetFromPerson(person1, pet1);
-        zooClub.removePerson(person2);
-
-        zooClub.displayClub();
-
-        Pet pet3 = new Pet("Parrot");
-        zooClub.addPetToPerson(person1, pet3);
-        zooClub.addPetToPerson(person3, pet3);
-
-        zooClub.displayClub();
-        zooClub.removePetFromAllPeople(pet3);
-
-        zooClub.displayClub();
-
-    }
-
-    private static List<User> getUserList() {
-        User user1 = new User("a", 20);
-        User user2 = new User("fads", 21);
-        User user3 = new User("vczxv", 22);
-        User user4 = new User("nhfgmj", 22);
-        User user5 = new User("yurure", 24);
-        User user6 = new User("fda11321", 21);
-        User user7 = new User("12343gdsa", 25);
-        User user8 = new User("vcxz", 44);
-        User user9 = new User("bgdnhgf", 209);
-        User user10 = new User("12re4fads", 1);
-        return List.of(user1, user2, user3, user4, user5, user6, user7, user8, user9, user10);
-    }
-
-    private static List<UserWithDetails> getUserWithDetailsList() {
-        List<UserWithDetails> userWithDetailsList = new ArrayList<>();
-        Random random = new Random();
-        for (int i = 1; i <= 10; i++) {
-            UserWithDetails user = new UserWithDetails();
-            user.setId(i);
-            user.setName("User" + i);
-            user.setSurname("Surname" + i);
-            user.setEmail("user" + i + "@example.com");
-            user.setAge(25 + i);
-            user.setGender(random.nextBoolean() ? Gender.MALE : Gender.FEMALE);
-
-            int numberOfSkills = random.nextInt(5) + 1;
-            List<Skill> skillList = new ArrayList<>();
-            for (int j = 1; j <= numberOfSkills; j++) {
-                Skill skill = new Skill();
-                skill.setTitle("Skill" + j);
-                skill.setExp(i * 2);
-                skillList.add(skill);
+        List<Car> carList = createListWithRandomAmountOfCars();
+        carList.forEach(System.out::println);
+        System.out.println("__________delimiter___________");
+        carList.stream().limit(carList.size()/2).forEach(Main::engineRepair);
+        carList.forEach(System.out::println);
+        System.out.println("__________delimiter___________");
+        carList.forEach(car -> {
+            if (car.getCarOwner().getDriving_experience() < 5 && car.getCarOwner().getAge() > 25) {
+                trainingCourse(car.getCarOwner());
             }
-            user.setSkills(skillList);
+        });
+        carList.forEach(System.out::println);
+        System.out.println("__________delimiter___________");
+        int sumToByAllCars = getSumFromCarsList(carList);
+        System.out.printf("To buy all cars from this list we need %d UC", sumToByAllCars);
+    }
 
+    private static String getRandomLetter(String[] strings) {
+        Random random = new Random();
+        return strings[random.nextInt(strings.length)];
+    }
+    private static Integer getRandomInteger() {
+        Random random = new Random();
+        return random.nextInt((999) + 1);
+    }
+    private static List<Car> createListWithRandomAmountOfCars() {
+        List<Car> carList = new ArrayList<>();
+        String[] carBrands = {"Ford", "Audi", "BMW", "Mazda", "Mitsubishi", "Fiat", "Opel", "Volvo"};
+        String[] names = {"Steve", "Brad", "uvuvwevwevwe onyetenyevwe ugwemuhwem osas", "Michael", "Ronaldo", "Donald", "Leonard"};
+        Random random = new Random();
+        for (int i = 1; i < random.nextInt(8, 20); i++) {
             Car car = new Car();
-            car.setModel("Model" + i);
-            car.setYear(2000 + i);
-            car.setPower(150 + i);
-            user.setCar(car);
-            userWithDetailsList.add(user);
+            car.setBrand(carBrands[random.nextInt(carBrands.length)]);
+            car.setEngine_power(random.nextInt(100, 350));
+            car.setPrice(random.nextInt(5000, 25000));
+            car.setProduction_year(random.nextInt(1990, 2023));
+
+            CarOwner carOwner = new CarOwner();
+            carOwner.setName(names[random.nextInt(names.length)]);
+            carOwner.setAge(random.nextInt(18, 50));
+            carOwner.setDriving_experience(random.nextInt(1, 30));
+
+            car.setCarOwner(carOwner);
+            carList.add(car);
         }
-        return userWithDetailsList;
+        return carList;
+    }
+    private static void engineRepair(Car car) {
+        car.setEngine_power((int) (car.getEngine_power() * 1.1));
+    }
+    private static void trainingCourse(CarOwner carOwner) {
+        carOwner.setDriving_experience(carOwner.getDriving_experience() + 1);
+    }
+    private static int getSumFromCarsList(List<Car> carList) {
+        return carList
+                .stream()
+                .mapToInt(Car::getPrice)
+                .reduce(0, Integer::sum);
     }
 }
